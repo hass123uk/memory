@@ -1,0 +1,30 @@
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(200px, auto);
+}
+
+.card {
+    border: 2px solid hotpink;
+    background-color: aliceblue;
+    font: 5em sans-serif;
+}
+
+.card:hover {
+    background-color: hotpink;
+}
+
+.card.selected {
+    background-color: blue;
+}
+
+
+.card.success {
+    background-color: green;
+}
+
+.card.failure {
+    background-color: red;
+}
+

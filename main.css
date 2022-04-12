@@ -8,7 +8,7 @@ main {
 .card {
     border: 2px solid hotpink;
     background-color: aliceblue;
-    font: 5em sans-serif;
+    font-size: 0;
 }
 
 .card:hover {
@@ -16,6 +16,7 @@ main {
 }
 
 .card.selected {
+    font: 5em sans-serif;
     background-color: blue;
 }
 

@@ -3,7 +3,7 @@
 const cardsContainerElement = document.getElementById("cards-container");
 if (!cardsContainerElement) throw Error("Cannot find cards container.");
 
-const initialCards = [1, 2, 3, 4];
+const initialCards = [1, 2];
 
 const doubleAndRandomizedCards = [...initialCards, ...initialCards].sort(
   () => Math.random() - 0.5
@@ -19,6 +19,7 @@ function mapCardToButton(card, clickHandler) {
   return button;
 }
 
+let matchedCards = [];
 let lastClicked;
 function handleCardClicked(event) {
   const button = event.currentTarget;
@@ -34,6 +35,7 @@ function handleCardClicked(event) {
   }
 
   if (lastClicked.text === text) {
+    matchedCards.push(text);
     button.disabled = true;
     button.classList.add("success");
     lastClicked.button.classList.add("success");
@@ -47,6 +49,15 @@ function handleCardClicked(event) {
   }
 
   lastClicked = undefined;
+
+  if (matchedCards.length === initialCards.length) {
+    window.setTimeout(() => {
+      const reloadGame = confirm(
+        `Well done, all cards matched.\nDo you want to restart the game?`
+      );
+      if (reloadGame) location.reload();
+    }, 0);
+  }
 }
 
 const buttons = doubleAndRandomizedCards.map((card) =>

@@ -103,14 +103,14 @@ function resetButtonAfterDelay(cards) {
     for (const card of cards) {
       card.disabled = false;
     }
-  }, 2000);
+  }, 1000);
 }
 
 function alertOnGameEnd(cards) {
   if (matchedCards.length !== cards.length) return;
   window.setTimeout(() => {
     const reloadGame = confirm(
-      `Well done, all cards matched.\nDo you want to restart the game?`
+      `Nice, all cards matched!\nDo you want to restart the game?`
     );
     if (reloadGame) location.reload();
   }, 0);

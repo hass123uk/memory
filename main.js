@@ -1,13 +1,17 @@
 "use strict";
 
+function startGame(cards) {
+  const doubleCards = [...cards, ...cards];
+  const randomOrder = doubleCards.sort(() => Math.random() - 0.5);
+  const buttons = randomOrder.map((card) =>
+    mapCardToButton(card, (event) => handleCardClicked(event, cards))
+  );
+
+  cardsContainerElement.append(...buttons);
+}
+
 const cardsContainerElement = document.getElementById("cards-container");
 if (!cardsContainerElement) throw Error("Cannot find cards container.");
-
-const initialCards = [1, 2, "a"];
-
-const doubleAndRandomizedCards = [...initialCards, ...initialCards].sort(
-  () => Math.random() - 0.5
-);
 
 function mapCardToButton(card, clickHandler) {
   const button = document.createElement("button");
@@ -19,63 +23,71 @@ function mapCardToButton(card, clickHandler) {
   return button;
 }
 
-function resetButtonAfterDelay(button1, button2) {
-  window.setTimeout(function () {
-    button1.classList.remove("failure");
-    button2.classList.remove("failure");
-
-    button1.classList.remove("selected");
-    button2.classList.remove("selected");
-
-    button1.disabled = false;
-    button2.disabled = false;
-  }, 2000);
-}
-
 let matchedCards = [];
 let lastClicked;
-function handleCardClicked(event) {
-  const button = event.currentTarget;
+function handleCardClicked(event, cards) {
+  const button1 = event.currentTarget;
+  const text = button1.innerText;
 
-  button.disabled = true;
-  button.classList.add("selected");
+  button1.disabled = true;
+  button1.classList.add("selected");
 
-  const text = button.innerText;
   if (!lastClicked) {
     lastClicked = {
       text,
-      button,
+      button: button1,
     };
     return;
   }
 
+  const button2 = lastClicked?.button;
+  const bothButtons = [button1, button2];
+
   if (lastClicked.text === text) {
     matchedCards.push(text);
-    button.classList.add("success");
-    lastClicked.button.classList.add("success");
 
-    button.classList.remove("failure");
-    lastClicked.button.classList.remove("failure");
+    addClass("success", bothButtons);
+    removeClass("failure", bothButtons);
   } else {
-    button.classList.add("failure");
-    lastClicked.button.classList.add("failure");
-
-    resetButtonAfterDelay(button, lastClicked.button);
+    addClass("failure", bothButtons);
+    resetButtonAfterDelay(bothButtons);
   }
 
   lastClicked = undefined;
+  alertOnGameEnd(cards);
+}
 
-  if (matchedCards.length === initialCards.length) {
-    window.setTimeout(() => {
-      const reloadGame = confirm(
-        `Well done, all cards matched.\nDo you want to restart the game?`
-      );
-      if (reloadGame) location.reload();
-    }, 0);
+function addClass(className, elements) {
+  for (const element of elements) {
+    element.classList.add(className);
   }
 }
 
-const buttons = doubleAndRandomizedCards.map((card) =>
-  mapCardToButton(card, handleCardClicked)
-);
-cardsContainerElement.append(...buttons);
+function removeClass(className, elements) {
+  for (const element of elements) {
+    element.classList.remove(className);
+  }
+}
+
+function resetButtonAfterDelay(buttons) {
+  window.setTimeout(function () {
+    removeClass("failure", buttons);
+    removeClass("selected", buttons);
+    for (const button of buttons) {
+      button.disabled = false;
+    }
+  }, 2000);
+}
+
+function alertOnGameEnd(cards) {
+  if (matchedCards.length !== cards.length) return;
+  window.setTimeout(() => {
+    const reloadGame = confirm(
+      `Well done, all cards matched.\nDo you want to restart the game?`
+    );
+    if (reloadGame) location.reload();
+  }, 0);
+}
+
+const cards = [1, 2, "a"];
+startGame(cards);

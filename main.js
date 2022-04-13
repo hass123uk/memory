@@ -12,54 +12,72 @@ startGame(cards);
 function startGame(cards) {
   const doubleCards = [...cards, ...cards];
   const randomOrder = doubleCards.sort(() => Math.random() - 0.5);
-  const buttons = randomOrder.map((card) =>
-    mapCardToButton(card, (event) => handleCardClicked(event, cards))
+  const cardElements = randomOrder.map((card) =>
+    createCard(card, (event) => handleCardClicked(event, cards))
   );
 
   const cardsContainerElement = document.getElementById("cards-container");
   if (!cardsContainerElement) throw Error("Cannot find cards container.");
 
-  cardsContainerElement.append(...buttons);
+  cardsContainerElement.append(...cardElements);
 }
 
-function mapCardToButton(card, clickHandler) {
-  const button = document.createElement("button");
-  const text = document.createTextNode(card);
-  button.appendChild(text);
-  button.classList.add("card");
+function createCard(cardText, clickHandler) {
+  const card = document.createElement("div");
+  card.classList.add("card");
+  card.addEventListener("click", clickHandler, true);
 
-  button.addEventListener("click", clickHandler, true);
-  return button;
+  const cardInner = document.createElement("div");
+  cardInner.classList.add("card-inner");
+  card.appendChild(cardInner);
+
+  const cardFront = document.createElement("div");
+  cardFront.classList.add("card-front");
+
+  const h2 = document.createElement("h2");
+  const textNode = document.createTextNode(cardText);
+  h2.appendChild(textNode);
+
+  const cardBack = document.createElement("div");
+  cardBack.classList.add("card-back");
+  cardBack.appendChild(h2);
+
+  cardInner.appendChild(cardFront);
+  cardInner.appendChild(cardBack);
+
+  return card;
 }
 
 let matchedCards = [];
 let lastClicked;
 function handleCardClicked(event, cards) {
-  const button1 = event.currentTarget;
-  const text = button1.innerText;
+  console.log(event);
+  console.log(event.currentTarget);
+  const card1 = event.currentTarget;
+  const text = card1.innerText;
 
-  button1.disabled = true;
-  button1.classList.add("selected");
+  card1.disabled = true;
+  card1.classList.add("selected");
 
   if (!lastClicked) {
     lastClicked = {
       text,
-      button: button1,
+      card: card1,
     };
     return;
   }
 
-  const button2 = lastClicked?.button;
-  const bothButtons = [button1, button2];
+  const card2 = lastClicked?.card;
+  const bothCards = [card1, card2];
 
   if (lastClicked.text === text) {
     matchedCards.push(text);
 
-    addClass("success", bothButtons);
-    removeClass("failure", bothButtons);
+    addClass("success", bothCards);
+    removeClass("failure", bothCards);
   } else {
-    addClass("failure", bothButtons);
-    resetButtonAfterDelay(bothButtons);
+    addClass("failure", bothCards);
+    resetButtonAfterDelay(bothCards);
   }
 
   lastClicked = undefined;
@@ -78,12 +96,12 @@ function removeClass(className, elements) {
   }
 }
 
-function resetButtonAfterDelay(buttons) {
+function resetButtonAfterDelay(cards) {
   window.setTimeout(function () {
-    removeClass("failure", buttons);
-    removeClass("selected", buttons);
-    for (const button of buttons) {
-      button.disabled = false;
+    removeClass("failure", cards);
+    removeClass("selected", cards);
+    for (const card of cards) {
+      card.disabled = false;
     }
   }, 2000);
 }

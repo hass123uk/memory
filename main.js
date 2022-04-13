@@ -1,7 +1,7 @@
 "use strict";
 
 const cards = [];
-const numberOfCards = 5;
+const numberOfCards = 7;
 while (cards.length < numberOfCards) {
   const randomNumber = getFlooredRandom(0, 100);
   cards.push(randomNumber);

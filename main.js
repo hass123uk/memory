@@ -23,7 +23,7 @@ function startGame(cards) {
 }
 
 function createCard(cardText, clickHandler) {
-  const card = document.createElement("div");
+  const card = document.createElement("button");
   card.classList.add("card");
   card.addEventListener("click", clickHandler, true);
 

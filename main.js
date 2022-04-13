@@ -1,5 +1,14 @@
 "use strict";
 
+const cards = [];
+const numberOfCards = 5;
+while (cards.length < numberOfCards) {
+  const randomNumber = getFlooredRandom(0, 100);
+  cards.push(randomNumber);
+}
+
+startGame(cards);
+
 function startGame(cards) {
   const doubleCards = [...cards, ...cards];
   const randomOrder = doubleCards.sort(() => Math.random() - 0.5);
@@ -7,11 +16,11 @@ function startGame(cards) {
     mapCardToButton(card, (event) => handleCardClicked(event, cards))
   );
 
+  const cardsContainerElement = document.getElementById("cards-container");
+  if (!cardsContainerElement) throw Error("Cannot find cards container.");
+
   cardsContainerElement.append(...buttons);
 }
-
-const cardsContainerElement = document.getElementById("cards-container");
-if (!cardsContainerElement) throw Error("Cannot find cards container.");
 
 function mapCardToButton(card, clickHandler) {
   const button = document.createElement("button");
@@ -89,5 +98,7 @@ function alertOnGameEnd(cards) {
   }, 0);
 }
 
-const cards = [1, 2, "a"];
-startGame(cards);
+function getFlooredRandom(min, max) {
+  const arbitraryRandom = Math.random() * (max - min) + min;
+  return Math.floor(arbitraryRandom);
+}

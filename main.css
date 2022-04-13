@@ -21,7 +21,6 @@ main {
 
 .card:disabled {
     color: unset;
-    background-color: #ededf4;
 }
 
 .card-inner {

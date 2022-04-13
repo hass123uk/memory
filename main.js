@@ -59,7 +59,7 @@ function handleCardClicked(event, cards) {
   card1.disabled = true;
   card1.classList.add("selected");
 
-  if (!lastClicked) {
+  if (!lastClicked || lastClicked.card === card1) {
     lastClicked = {
       text,
       card: card1,

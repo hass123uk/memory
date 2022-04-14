@@ -10,14 +10,13 @@ main {
 
 .card {
     width: 81px;
-    border: 0;
+    border: 2px solid #bbb;
     margin: 0;
     padding: 0;
     background-color: transparent;
     box-shadow:  0.3em 0.3em 1em rgba(0,0,0,0.3);
     -webkit-perspective: 1000px;
     perspective: 1000px;
-    border: 2px solid #bbb;
 }
 
 .card:disabled {
@@ -53,9 +52,6 @@ main {
 
 .card-back {
     transform: rotateY(180deg);
-    font: 0;
-}
-.card.selected .card-back{
     font: 2em sans-serif;
 }
 
@@ -79,8 +75,8 @@ main {
     .card {
         width: 121px;
     }
-    .card.selected .card-back{
-        font: 2em sans-serif;
+    .card-back{
+        font: 3em sans-serif;
     }
 }
 
@@ -92,7 +88,7 @@ main {
     .card {
         width: 242px;
     }
-    .card.selected .card-back{
-        font: 2em sans-serif;
+    .card-back{
+        font: 5em sans-serif;
     }
 }

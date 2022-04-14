@@ -1,0 +1,26 @@
+{
+  "name": "memory",
+  "version": "1.0.0",
+  "description": "Test your memory by finding the matching cards",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hass123uk/memory.git"
+  },
+  "author": "Hassan Mahmud",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hass123uk/memory/issues"
+  },
+  "homepage": "https://hass123uk.github.io/memory",
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "jest": "^27.4.1",
+    "ts-jest": "^27.1.4",
+    "typescript": "^4.6.3"
+  }
+}

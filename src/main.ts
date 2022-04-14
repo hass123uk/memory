@@ -1,5 +1,3 @@
-"use strict";
-
 const cards = [];
 const numberOfCards = 8;
 while (cards.length < numberOfCards) {
@@ -106,12 +104,12 @@ function resetButtonAfterDelay(cards) {
   }, 1000);
 }
 
+const dialog = document.getElementById("finished-dialog");
 function alertOnGameEnd(cards) {
   if (matchedCards.length !== cards.length) return;
   window.setTimeout(() => {
-    const reloadGame = confirm(
-      `Nice, all cards matched!\nDo you want to restart the game?`
-    );
+    const reloadGame = confirm("Restart the game?");
+    // dialog.showModel;
     if (reloadGame) location.reload();
   }, 300);
 }

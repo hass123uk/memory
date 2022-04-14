@@ -15,6 +15,7 @@ main {
     padding: 0;
     background-color: transparent;
     box-shadow:  0.3em 0.3em 1em rgba(0,0,0,0.3);
+    -webkit-perspective: 1000px;
     perspective: 1000px;
     border: 2px solid #bbb;
 }
@@ -37,6 +38,7 @@ main {
   position: absolute;
   width: 100%;
   height: 100%;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -51,6 +53,9 @@ main {
 
 .card-back {
     transform: rotateY(180deg);
+    font: 0;
+}
+.card.selected .card-back{
     font: 2em sans-serif;
 }
 
@@ -74,8 +79,8 @@ main {
     .card {
         width: 121px;
     }
-    .card-back {
-        font: 3em sans-serif;
+    .card.selected .card-back{
+        font: 2em sans-serif;
     }
 }
 
@@ -87,7 +92,7 @@ main {
     .card {
         width: 242px;
     }
-    .card-back {
-        font: 5em sans-serif;
+    .card.selected .card-back{
+        font: 2em sans-serif;
     }
 }

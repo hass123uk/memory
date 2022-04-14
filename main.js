@@ -1,7 +1,7 @@
 "use strict";
 
 const cards = [];
-const numberOfCards = 7;
+const numberOfCards = 8;
 while (cards.length < numberOfCards) {
   const randomNumber = getFlooredRandom(0, 100);
   cards.push(randomNumber);
@@ -113,7 +113,7 @@ function alertOnGameEnd(cards) {
       `Nice, all cards matched!\nDo you want to restart the game?`
     );
     if (reloadGame) location.reload();
-  }, 0);
+  }, 300);
 }
 
 function getFlooredRandom(min, max) {

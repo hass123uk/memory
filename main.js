@@ -54,7 +54,7 @@ function handleCardClicked(event, cards) {
   console.log(event);
   console.log(event.currentTarget);
   const card1 = event.currentTarget;
-  const text = card1.innerText;
+  const text = card1.innerText.trim();
 
   card1.disabled = true;
   card1.classList.add("selected");

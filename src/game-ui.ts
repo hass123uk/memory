@@ -53,16 +53,17 @@ function handleCardClicked(event: Event, game: Game) {
     case PlayResult.PENDING:
       currentPendingElement = cardElement;
       break;
-    case PlayResult.SUCCESS:
-      addClass("success", bothCards);
-      removeClass("failure", bothCards);
-      break;
     case PlayResult.FAILURE:
       addClass("failure", bothCards);
       resetButtonAfterDelay(bothCards);
       break;
+
     case PlayResult.GAMEOVER:
       alertOnGameEnd();
+    //Game over also triggers the success secion.
+    case PlayResult.SUCCESS:
+      addClass("success", bothCards);
+      removeClass("failure", bothCards);
       break;
     default:
       console.error("Unknown play result in click handler.");
@@ -99,5 +100,5 @@ function alertOnGameEnd() {
   window.setTimeout(() => {
     const reloadGame = confirm("Restart the game?");
     if (reloadGame) location.reload();
-  }, 300);
+  }, 500);
 }

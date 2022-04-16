@@ -59,14 +59,13 @@ describe("play game of 10 cards", () => {
   });
   test("play history maintained until game over", () => {
     let counter = 0;
-    let result;
-    let cards = [...game.cards].sort(() => Math.random() - 0.5);
+    let result: PlayResult;
+    let cards = [...game.cards].sort();
     while (result !== PlayResult.GAMEOVER) {
       for (const card of cards) {
         result = game.cardSelected(card);
         counter++;
       }
-      cards = cards.sort();
     }
 
     expect(game.playHistory.length).toEqual(counter);

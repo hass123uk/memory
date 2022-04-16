@@ -13,8 +13,8 @@ type Play = {
 
 export class Game {
   public static generateRandomNumbers = generateRandomNumbers;
-  public readonly initalValues: number[];
-  public readonly solvedValues: number[];
+  private readonly initalValues: number[];
+  private readonly solvedValues: number[];
   public readonly cards: number[];
   public readonly playHistory: Play[];
 
@@ -27,7 +27,8 @@ export class Game {
   }
 
   public cardSelected(card: number): PlayResult {
-    if (!card) throw new Error("Card is not defined.");
+    if (card === undefined || card === null)
+      throw new Error("Card is not defined.");
     if (this.isCardNotPartGame(card))
       throw new Error("This card is not part of the current game.");
     if (this.isCardSolved(card))

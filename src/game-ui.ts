@@ -44,18 +44,13 @@ function handleCardClicked(event: Event, game: Game) {
   cardElement.disabled = true;
   cardElement.classList.add("selected");
 
-  if (!currentPendingElement) {
-    console.error(
-      "current pending element is null - this should not be possible."
-    );
-  }
   const bothCards = [cardElement, currentPendingElement];
 
   const card = Number(cardElement.innerText.trim());
   const result = game.cardSelected(card);
 
   switch (result) {
-    case PlayResult.SUCCESS:
+    case PlayResult.PENDING:
       currentPendingElement = cardElement;
       break;
     case PlayResult.SUCCESS:

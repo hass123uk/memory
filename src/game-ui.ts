@@ -44,13 +44,18 @@ function handleCardClicked(event: Event, game: Game) {
   cardElement.disabled = true;
   cardElement.classList.add("selected");
 
+  if (!currentPendingElement) {
+    console.error(
+      "current pending element is null - this should not be possible."
+    );
+  }
   const bothCards = [cardElement, currentPendingElement];
 
   const card = Number(cardElement.innerText.trim());
-
   const result = game.cardSelected(card);
+
   switch (result) {
-    case PlayResult.PENDING:
+    case PlayResult.SUCCESS:
       currentPendingElement = cardElement;
       break;
     case PlayResult.SUCCESS:
@@ -62,6 +67,7 @@ function handleCardClicked(event: Event, game: Game) {
       resetButtonAfterDelay(bothCards);
       break;
     case PlayResult.GAMEOVER:
+      alertOnGameEnd();
       break;
     default:
       console.error("Unknown play result in click handler.");
@@ -69,30 +75,32 @@ function handleCardClicked(event: Event, game: Game) {
   }
 }
 
-function addClass(className: string, elements: HTMLElement[]) {
+function addClass(className: string, elements: Array<HTMLElement | undefined>) {
   for (const element of elements) {
-    element.classList.add(className);
+    element?.classList.add(className);
   }
 }
 
-function removeClass(className: string, elements: HTMLElement[]) {
+function removeClass(
+  className: string,
+  elements: Array<HTMLElement | undefined>
+) {
   for (const element of elements) {
-    element.classList.remove(className);
+    element?.classList.remove(className);
   }
 }
 
-function resetButtonAfterDelay(cards: HTMLButtonElement[]) {
+function resetButtonAfterDelay(cards: Array<HTMLButtonElement | undefined>) {
   window.setTimeout(function () {
     removeClass("selected", cards);
     removeClass("failure", cards);
     for (const card of cards) {
-      card.disabled = false;
+      if (card) card.disabled = false;
     }
   }, 1000);
 }
 
-function alertOnGameEnd(cards) {
-  if (matchedCards.length !== cards.length) return;
+function alertOnGameEnd() {
   window.setTimeout(() => {
     const reloadGame = confirm("Restart the game?");
     if (reloadGame) location.reload();

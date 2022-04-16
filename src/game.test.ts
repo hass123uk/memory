@@ -59,7 +59,7 @@ describe("play game of 10 cards", () => {
   });
   test("play history maintained until game over", () => {
     let counter = 0;
-    let result: PlayResult;
+    let result: PlayResult | undefined;
     let cards = [...game.cards].sort();
     while (result !== PlayResult.GAMEOVER) {
       for (const card of cards) {
@@ -105,7 +105,7 @@ describe("test guards", () => {
 
 function countPairs(arr: Array<string | number>) {
   let pairs = 0;
-  const obj = {};
+  const obj: Record<string | number, 0 | 1> = {};
   arr.forEach((i) => {
     if (obj[i]) {
       pairs += 1;

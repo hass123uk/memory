@@ -8,7 +8,7 @@
     "test": "jest",
     "check": "tsc --noEmit",
     "start": "parcel",
-    "build": "parcel build"
+    "build:gh-pages": "parcel build --dist-dir='./' --public-url='./'"
   },
   "repository": {
     "type": "git",

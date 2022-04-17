@@ -1,0 +1,1 @@
+<!-- When included, the GitHub Actions workflow will detect the state that the branch does not need a build step, and will execute only the steps necessary to deploy the site to GitHub Pages servers. -->
